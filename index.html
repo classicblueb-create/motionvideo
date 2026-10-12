@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motion Reference Video AI - คลังความรู้และเทมเพลต</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Sarabun:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#F47A20',    /* Orange */
+                        cream: '#F7F1E8',      /* Soft Cream (Background) */
+                        warmWhite: '#FFFDFC',  /* Warm White (Cards) */
+                        textMain: '#111111',   /* Black (Headings) */
+                        textBody: '#2E2E2E',   /* Charcoal (Body Text) */
+                        lightGray: '#EDE7DF'   /* Light Gray (Borders) */
+                    },
+                    fontFamily: {
+                        kanit: ['Kanit', 'sans-serif'],
+                        sarabun: ['Sarabun', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px rgba(0, 0, 0, 0.04)',
+                        'hover': '0 8px 30px rgba(244, 122, 32, 0.12)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F7F1E8;
+            color: #2E2E2E;
+            scroll-behavior: smooth;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #F7F1E8; }
+        ::-webkit-scrollbar-thumb { background: #EDE7DF; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #F47A20; }
+        
+        /* Pre block styling for prompts */
+        pre {
+            white-space: pre-wrap;       /* Since CSS 2.1 */
+            white-space: -moz-pre-wrap;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+        }
+    </style>
+</head>
+<body class="font-sarabun antialiased overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="w-full py-4 px-6 md:px-12 flex justify-between items-center bg-cream/90 backdrop-blur-md sticky top-0 z-50 border-b border-lightGray/80">
+        <div class="flex items-center gap-3">
+            <div class="bg-primary text-white p-2 rounded-[12px] shadow-sm">
+                <i class="ph ph-film-strip text-xl"></i>
+            </div>
+            <span class="font-kanit font-bold text-xl text-textMain tracking-wide">modty.ai</span>
+        </div>
+        <a href="#special-offer" 
+           class="hidden md:flex items-center gap-2 bg-primary px-5 py-2 rounded-full text-white font-kanit font-medium hover:bg-orange-600 transition-all shadow-sm">
+            รับ E-book ราคาพิเศษ <i class="ph-bold ph-shopping-cart"></i>
+        </a>
+    </nav>
+
+    <!-- Page Header (Cover Title Card style) -->
+    <header class="max-w-7xl mx-auto px-6 md:px-12 pt-12 pb-8">
+        <div class="bg-warmWhite border border-lightGray rounded-[24px] p-8 md:p-12 shadow-soft relative overflow-hidden">
+            <!-- Decorative BG -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10 translate-x-1/2 -translate-y-1/2"></div>
+            
+            <div class="inline-flex items-center gap-2 bg-primary/10 text-primary px-3 py-1.5 rounded-full mb-6">
+                <i class="ph-fill ph-sparkle"></i>
+                <span class="font-kanit font-medium text-sm">AI WORKFLOW</span>
+            </div>
+            
+            <h1 class="font-kanit font-bold text-4xl md:text-5xl text-textMain leading-tight mb-4 max-w-3xl">
+                จาก Motion Reference สู่ <br/>
+                <span class="text-primary">Video ใหม่ด้วย AI</span>
+            </h1>
+            <p class="font-sarabun text-lg text-textBody max-w-2xl leading-relaxed">
+                เปลี่ยนไอเดียให้เป็นระบบด้วยดีไซน์ที่ชัดเจน รวบรวม Prompt, Workflow, และ Reference ที่จำเป็นสำหรับการสร้างวิดีโอด้วย AI อย่างมืออาชีพ
+            </p>
+        </div>
+    </header>
+
+    <!-- Main Content Area with Sidebar -->
+    <main class="max-w-7xl mx-auto px-6 md:px-12 pb-24 flex flex-col lg:flex-row gap-10">
+        
+        <!-- Sidebar Navigation (Sticky) -->
+        <aside class="w-full lg:w-64 shrink-0 relative">
+            <div class="lg:sticky lg:top-28 bg-warmWhite border border-lightGray rounded-[16px] p-5 shadow-soft">
+                <h3 class="font-kanit font-semibold text-textMain mb-4 text-lg">สารบัญเนื้อหา</h3>
+                <ul class="space-y-2 font-sarabun text-textBody font-medium">
+                    <li><a href="#problem" class="flex items-center gap-3 p-2 rounded-lg hover:bg-cream hover:text-primary transition-colors"><i class="ph ph-warning-circle text-lg"></i> ปัญหาการสั่ง AI</a></li>
+                    <li><a href="#step1" class="flex items-center gap-3 p-2 rounded-lg hover:bg-cream hover:text-primary transition-colors"><i class="ph ph-magnifying-glass text-lg"></i> 1. หา Reference</a></li>
+                    <li><a href="#step2" class="flex items-center gap-3 p-2 rounded-lg hover:bg-cream hover:text-primary transition-colors"><i class="ph ph-cpu text-lg"></i> 2. ให้ AI วิเคราะห์</a></li>
+                    <li><a href="#step3" class="flex items-center gap-3 p-2 rounded-lg hover:bg-cream hover:text-primary transition-colors"><i class="ph ph-chat-circle-text text-lg"></i> 3. คุยต่อในแชทเดิม</a></li>
+                    <li><a href="#step4" class="flex items-center gap-3 p-2 rounded-lg hover:bg-cream hover:text-primary transition-colors"><i class="ph ph-play-circle text-lg"></i> 4. สร้างด้วย Google Flow</a></li>
+                    <li><a href="#special-offer" class="flex items-center gap-3 p-2 rounded-lg hover:bg-cream hover:text-primary transition-colors text-primary bg-primary/5 font-semibold"><i class="ph ph-gift text-lg"></i> โปรโมชั่นพิเศษ</a></li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Content Blocks -->
+        <article class="flex-1 space-y-12">
+            
+            <!-- Section: Problem -->
+            <section id="problem" class="scroll-mt-28">
+                <div class="bg-warmWhite border border-lightGray rounded-[20px] p-6 shadow-soft">
+                    <p class="font-sarabun text-textBody text-lg leading-relaxed mb-4">
+                        หลายครั้งเวลาเราเห็นวิดีโอ Motion สวยๆ เราอาจรู้ทันทีว่า <strong>“อยากได้ฟีลประมาณนี้”</strong> แต่พอจะอธิบายให้ AI ฟังกลับไม่รู้ว่าจะเริ่มตรงไหน
+                    </p>
+                    <p class="font-sarabun text-textBody text-lg leading-relaxed mb-4">
+                        จะบอกว่า “ทำให้เหมือนโฆษณา Product สวยๆ” ก็ยังกว้างเกินไป เพราะสิ่งที่ทำให้วิดีโอดูดีไม่ได้มีแค่ภาพสวย แต่ประกอบด้วยหลายอย่างพร้อมกัน ทั้งจังหวะของวิดีโอ การเคลื่อนกล้อง ตำแหน่งของ Object การขึ้นข้อความ แสง Material และ Transition ระหว่างแต่ละ Scene
+                    </p>
+                    <div class="relative pl-6 py-4 border-l-4 border-primary mt-6 bg-cream/50 rounded-r-[12px]">
+                        <p class="font-kanit font-medium text-lg text-textMain mb-2">
+                            Workflow ที่มดใช้เลยเริ่มจากสิ่งที่ง่ายกว่านั้น คือ
+                        </p>
+                        <ul class="list-disc list-inside font-sarabun text-textBody text-lg space-y-1 ml-2">
+                            <li>หา Motion Reference ที่เราชอบ แล้วให้ AI ช่วยอธิบาย Motion Direction ของวิดีโอนั้นออกมาก่อน</li>
+                            <li>จากนั้นเราค่อยเปลี่ยน “เรื่อง” ให้เป็นเรื่องของเราเอง</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Early CTA -->
+            <section class="bg-primary/10 border border-primary/20 rounded-[20px] p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div>
+                    <h3 class="font-kanit font-bold text-xl text-primary mb-2">สนใจอีบุ้คบนโนชั่นที่ไม่ใช่เล่ม ebook ไหมคะ?</h3>
+                    <p class="font-sarabun text-textBody text-sm">
+                        เนื้อหาจัดเต็มเทคนิคบอกชัดๆเลย มาในราคาพิเศษก่อนจะปรับเป็น 1,290 บาท
+                    </p>
+                </div>
+                <a href="#special-offer" 
+                   class="shrink-0 bg-primary text-white font-kanit font-bold px-6 py-3 rounded-full shadow-md hover:bg-orange-600 transition-colors w-full sm:w-auto text-center">
+                    ดูรายละเอียด
+                </a>
+            </section>
+
+            <hr class="border-lightGray">
+
+            <!-- Section: Step 1 -->
+            <section id="step1" class="scroll-mt-28">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center text-primary text-xl">
+                        <i class="ph-bold ph-number-circle-one"></i>
+                    </div>
+                    <h2 class="font-kanit font-semibold text-2xl text-textMain">เริ่มจากหา Motion Reference</h2>
+                </div>
+                
+                <div class="bg-warmWhite border border-lightGray rounded-[20px] p-6 shadow-soft space-y-4">
+                    <p class="font-sarabun text-textBody text-lg leading-relaxed">
+                        แหล่งที่มดใช้บ่อยคือ <strong>Pinterest</strong> เพราะค้นหา Visual และ Motion Direction ได้ค่อนข้างเร็ว
+                    </p>
+                    <p class="font-sarabun text-textBody font-medium">ลองค้นหาด้วยคำประมาณนี้:</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+                        <div class="bg-cream px-4 py-3 rounded-lg border border-lightGray/50 font-sarabun text-sm text-textBody text-center font-medium">SaaS Product Animation</div>
+                        <div class="bg-cream px-4 py-3 rounded-lg border border-lightGray/50 font-sarabun text-sm text-textBody text-center font-medium">Product Motion Design</div>
+                        <div class="bg-cream px-4 py-3 rounded-lg border border-lightGray/50 font-sarabun text-sm text-textBody text-center font-medium">3D Motion Graphics</div>
+                        <div class="bg-cream px-4 py-3 rounded-lg border border-lightGray/50 font-sarabun text-sm text-textBody text-center font-medium">Tech Brand Film</div>
+                        <div class="bg-cream px-4 py-3 rounded-lg border border-lightGray/50 font-sarabun text-sm text-textBody text-center font-medium">UI Motion</div>
+                        <div class="bg-cream px-4 py-3 rounded-lg border border-lightGray/50 font-sarabun text-sm text-textBody text-center font-medium">Kinetic Typography</div>
+                        <div class="bg-cream px-4 py-3 rounded-lg border border-lightGray/50 font-sarabun text-sm text-textBody text-center font-medium">Product Launch Animation</div>
+                        <div class="bg-cream px-4 py-3 rounded-lg border border-lightGray/50 font-sarabun text-sm text-textBody text-center font-medium">SaaS Launch Video</div>
+                        <div class="bg-cream px-4 py-3 rounded-lg border border-lightGray/50 font-sarabun text-sm text-textBody text-center font-medium">Brand Motion Design</div>
+                        <div class="bg-cream px-4 py-3 rounded-lg border border-lightGray/50 font-sarabun text-sm text-textBody text-center font-medium">3D Product Commercial</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Step 2 -->
+            <section id="step2" class="scroll-mt-28">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center text-primary text-xl">
+                        <i class="ph-bold ph-number-circle-two"></i>
+                    </div>
+                    <h2 class="font-kanit font-semibold text-2xl text-textMain">ให้ AI วิเคราะห์วิดีโอ Reference</h2>
+                </div>
+
+                <div class="bg-warmWhite border border-lightGray rounded-[20px] p-6 shadow-soft space-y-6">
+                    <p class="font-sarabun text-textBody text-lg leading-relaxed">
+                        เมื่อได้คลิปที่ชอบแล้ว ให้แนบวิดีโอเข้าไปใน AI แล้วใช้ Prompt ด้านล่างนี้<br><br>
+                        Prompt นี้จะให้ AI ไล่ดูทั้ง Composition, Camera, Typography, Color, Lighting, Motion, Transition และ Audio ก่อนเปลี่ยนทั้งหมดออกมาเป็น Generation Prompt ที่พร้อมเอาไปใช้สร้างวิดีโอ
+                    </p>
+
+                    <div class="relative bg-[#1E1E1E] rounded-[16px] overflow-hidden border border-gray-800 shadow-md">
+                        <div class="flex items-center justify-between px-4 py-3 bg-[#2D2D2D] border-b border-gray-700">
+                            <span class="font-kanit font-medium text-sm text-gray-300 flex items-center gap-2"><i class="ph-fill ph-code"></i> AI Motion Graphics Prompt</span>
+                            <button class="text-gray-400 hover:text-white transition-colors bg-white/10 px-3 py-1 rounded-md text-sm flex items-center gap-1" onclick="navigator.clipboard.writeText(document.getElementById('prompt1').innerText); alert('Copied!');">
+                                <i class="ph ph-copy"></i> Copy
+                            </button>
+                        </div>
+                        <pre id="prompt1" class="p-5 font-mono text-sm text-gray-300 overflow-x-auto h-96 overflow-y-auto custom-scrollbar leading-relaxed">You are a motion graphics director and prompt engineer. I’ve uploaded a video (motion graphics / animation / product demo / SaaS explainer). Do this in two phases. Do not skip steps or summarize loosely. Treat this as a professional shot-by-shot breakdown that another creator could rebuild the video from without ever seeing the original.
+
+PHASE 1 — FULL FRAME-BY-FRAME ANALYSIS
+
+Extract and inspect frames across the entire duration (don’t just sample the first few seconds). For each distinct scene/beat, report:
+
+1. Timestamp range (e.g. 0.0–2.5s)
+2. Composition & camera — framing, aspect ratio, camera movement (push, pan, orbit, static), depth of field, focal point
+3. Subject/content — every object, icon, illustration, photo, or 3D element on screen; its exact shape, style (flat/3D/line/glass/etc.), position, and size relative to frame
+4. Text & typography — exact wording, font style/weight (serif, sans, rounded, condensed), size hierarchy, color, letter-spacing, any kinetic animation (fade, slide, mask-reveal, letter-by-letter, blur-in)
+5. Color palette — background color(s), foreground/accent colors, note any hex-approximate values, gradients, or monochrome treatment
+6. Lighting, shadow & texture — light direction, shadow softness/hardness, surface textures (paper, metal, glass, matte, glossy), grain/noise, vignetting
+7. Icons/graphics/UI elements — describe each precisely: shape, line-weight, fill vs. outline, any brand marks, buttons, cursors, progress indicators, chart/data visuals
+8. Motion & transitions — how this beat animates in and how it transitions to the next (cut, morph, wipe, dissolve, liquid transition, particle dissolve, match-cut)
+9. Audio (if audible/inferable) — music mood/tempo, sound effects (whoosh, click, chime), voiceover presence and tone
+
+Also summarize once at the top:
+* Total duration, resolution/aspect ratio, frame rate (if determinable)
+* Overall visual style in one line (e.g. “cinematic B&W kinetic typography with metaphor visuals” or “flat glossy SaaS dashboard UI motion”)
+* Pacing (cuts per second, energy level)
+* Any recurring visual motif or through-line connecting the beats
+
+PHASE 2 — CONVERT THE ANALYSIS INTO AN OMNI FLASH GENERATION PROMPT
+
+Using everything found in Phase 1, write a single, ready-to-paste Google Omni Flash video generation prompt that would recreate this video’s look, pacing, and structure as closely as possible (not a copy of copyrighted specifics; recreate the style and technique, not any protected content).
+
+The prompt must include:
+* Style line — one dense sentence covering mood, lighting, color grading, camera behavior, and finish quality (premium/cinematic/glossy/etc.)
+* Technical specs — resolution, aspect ratio, fps, duration (match Omni Flash’s native output, currently 10 seconds; if the source is longer, compress the same number of beats proportionally into 10 seconds)
+* Beat-by-beat timeline — same structure as Phase 1, rewritten as generation instructions (what appears, how it moves, how it transitions), with exact color values, exact typography description, and exact icon/shape geometry so nothing is left ambiguous
+* Typography spec — one line locking the font style so it stays consistent across every text beat
+* Sound design line — score mood + key SFX moments, timed to the visual beats
+* Final frame spec — describe exactly what the last held frame should look like (this is what viewers remember most)
+
+Format the final prompt as a single copy-paste block, written as direct generation instructions (not questions, not commentary).
+
+PHASE 3 — CUSTOM CHANGE REQUEST
+
+(fill this in before sending, or leave as-is to recreate faithfully)
+
+Apply these swaps/changes to the Phase 2 prompt before finalizing it:
+* Brand name / logo: [e.g. “flevo” — attach brand kit image if available]
+* Color palette override: [e.g. keep original palette / use these hex codes instead: ___]
+* Text/copy override: [replace the on-screen lines with: ___]
+* Duration override: [default 10s / specify other]
+* Tone/style shift: [e.g. “make it full color instead of B&W” / “make it more playful, less corporate” / no change]
+* Anything to remove or add: [e.g. “remove the falling-man metaphor, add a data-chart metaphor instead”]
+
+If a field above is left blank, keep that element faithful to the original video’s analysis.</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Step 3 -->
+            <section id="step3" class="scroll-mt-28">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center text-primary text-xl">
+                        <i class="ph-bold ph-number-circle-three"></i>
+                    </div>
+                    <h2 class="font-kanit font-semibold text-2xl text-textMain">จุดสำคัญคือ อย่าเปิดแชทใหม่</h2>
+                </div>
+
+                <div class="bg-warmWhite border border-lightGray rounded-[20px] p-6 shadow-soft space-y-6">
+                    <div class="bg-cream/50 p-6 rounded-[16px] border border-lightGray">
+                        <p class="font-sarabun text-textBody text-lg leading-relaxed mb-4">
+                            หลังจาก AI วิเคราะห์วิดีโอเสร็จ เราจะได้ Prompt สำหรับสร้างวิดีโอกลับมา หลายคนอาจคิดว่าต้องก๊อป Prompt ยาวๆ ออกมา แล้วเริ่มนั่งแก้ Scene ทีละจุดเองจริงๆ ไม่จำเป็น
+                        </p>
+                        <p class="font-kanit font-bold text-xl text-primary text-center my-4 bg-white py-3 rounded-lg border border-primary/20 shadow-sm">
+                            ให้คุยต่อในแชทเดิมเลย
+                        </p>
+                        <p class="font-sarabun text-textBody text-lg leading-relaxed">
+                            เพราะตอนนี้ AI มีทั้ง Reference Video, ผลวิเคราะห์ Shot, Camera, Composition, Typography, Timing, Transition และ Generation Prompt อยู่ใน Context เดียวกันแล้ว ตรงนี้ทำให้เราสามารถสั่งต่อด้วยภาษาธรรมดามากๆ ได้
+                        </p>
+                    </div>
+
+                    <h3 class="font-kanit font-semibold text-xl text-textMain mt-6">Prompt ตัวอย่าง</h3>
+                    <div class="bg-white p-5 rounded-[12px] border-l-4 border-primary shadow-sm">
+                        <p class="font-sarabun text-lg text-textBody font-medium">
+                            "เปลี่ยนเรื่องเป็น การใช้ Codex ตัดต่อวิดีโอ<br>
+                            ใช้ Motion Direction และโครงสร้างจาก Reference เดิม<br>
+                            เปลี่ยน Visual, Object และข้อความให้เหมาะกับเรื่องนี้<br>
+                            สร้าง Final Prompt ใหม่พร้อมใช้"
+                        </p>
+                    </div>
+
+                    <p class="font-sarabun text-textBody text-lg leading-relaxed">
+                        เท่านี้ AI ก็จะนำโครงสร้างเดิมไปตีความใหม่ให้เข้ากับเรื่อง Codex<br>
+                        จากเดิมใน Reference อาจมี Dashboard, Product UI หรือ SaaS Feature ในวิดีโอใหม่อาจเปลี่ยนเป็น Video File, Code Editor, Timeline, Preview และ Rendered Video แต่ Motion Direction เดิมยังสามารถอยู่ต่อได้
+                    </p>
+                    
+                    <hr class="border-lightGray/80 my-6">
+                    
+                    <h3 class="font-kanit font-semibold text-xl text-textMain">ถ้าอยากง่ายกว่านั้น พิมพ์แค่ “เปลี่ยนเรื่องเป็น…”</h3>
+                    <p class="font-sarabun text-textBody text-lg leading-relaxed">
+                        เมื่อทำไปสักพัก จริงๆ ไม่จำเป็นต้องเขียนยาวทุกครั้งด้วย ถ้า AI เข้าใจ Context จากแชทก่อนหน้าอยู่แล้ว เราสามารถพิมพ์สั้นๆ เช่น
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-cream p-5 rounded-[12px] border border-lightGray/50 shadow-sm relative overflow-hidden group hover:border-primary/50 transition-colors">
+                            <span class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-2 py-1 rounded-bl-lg">Prompt 1</span>
+                            <p class="font-sarabun text-sm text-textBody mt-2">เปลี่ยนเรื่องเป็น การสร้าง Landing Page จากรูปเดียวด้วย Gemini ใช้ Motion Direction เดิม แล้วสร้าง Prompt ใหม่พร้อมใช้</p>
+                        </div>
+                        <div class="bg-cream p-5 rounded-[12px] border border-lightGray/50 shadow-sm relative overflow-hidden group hover:border-primary/50 transition-colors">
+                            <span class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-2 py-1 rounded-bl-lg">Prompt 2</span>
+                            <p class="font-sarabun text-sm text-textBody mt-2">เปลี่ยนเรื่องเป็น AI ช่วยวางแผนการเงิน ใช้รูปแบบเดิม แต่ปรับ Visual ให้เข้ากับเรื่องใหม่</p>
+                        </div>
+                        <div class="bg-cream p-5 rounded-[12px] border border-lightGray/50 shadow-sm relative overflow-hidden group hover:border-primary/50 transition-colors">
+                            <span class="absolute top-0 right-0 bg-primary text-white text-xs font-bold px-2 py-1 rounded-bl-lg">Prompt 3</span>
+                            <p class="font-sarabun text-sm text-textBody mt-2">ต่อไปเปลี่ยนเรื่องเป็น Personal Branding ใช้ Motion Direction เดิมทั้งหมด ส่ง Final Prompt ใหม่มาอย่างเดียว</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-primary/5 p-4 rounded-[12px] text-center border border-primary/20">
+                        <p class="font-sarabun font-medium text-textMain">
+                            AI ก็จะเอาบริบทเดิมมาใช้ต่อ ดังนั้น Reference หนึ่งตัวสามารถนำไปทดลองกับหลาย Topic ได้โดยไม่ต้องวิเคราะห์วิดีโอใหม่ทุกครั้ง
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Step 4 -->
+            <section id="step4" class="scroll-mt-28">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-[12px] bg-primary/10 flex items-center justify-center text-primary text-xl">
+                        <i class="ph-bold ph-number-circle-four"></i>
+                    </div>
+                    <h2 class="font-kanit font-semibold text-2xl text-textMain">จากนั้นเอา Reference + Prompt ใหม่ไปใช้ใน Google Flow</h2>
+                </div>
+
+                <div class="bg-warmWhite border border-lightGray rounded-[20px] p-6 shadow-soft space-y-6">
+                    <p class="font-sarabun text-textBody text-lg leading-relaxed">
+                        หลังจากเราได้ Final Generation Prompt ของเรื่องใหม่ แล้ว <strong class="text-primary">อย่าเอาไปใส่ Flow แบบมีแต่ข้อความอย่างเดียว</strong>
+                    </p>
+                    
+                    <p class="font-kanit font-medium text-textMain text-xl">วิธีที่มดใช้คือ</p>
+                    <p class="font-sarabun text-textBody text-lg leading-relaxed bg-cream/50 p-4 rounded-lg border border-lightGray">
+                        แนบ <strong>Video Reference ต้นฉบับ</strong> เข้าไปใน Flow พร้อมกับ <strong>Prompt ใหม่</strong> เพราะตอนนี้เรามีอยู่สองอย่างแล้ว
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="flex flex-col gap-3 bg-white p-5 rounded-[12px] border border-lightGray shadow-sm hover:shadow-md transition-shadow">
+                            <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold font-kanit">1</div>
+                            <h4 class="font-kanit font-bold text-lg text-textMain">Reference Video</h4>
+                            <p class="font-sarabun text-textBody">ช่วยให้ AI เห็น Visual และ Motion Direction ที่เรากำลังอ้างอิง</p>
+                        </div>
+                        <div class="flex flex-col gap-3 bg-white p-5 rounded-[12px] border border-lightGray shadow-sm hover:shadow-md transition-shadow">
+                            <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center font-bold font-kanit">2</div>
+                            <h4 class="font-kanit font-bold text-lg text-textMain">Final Generation Prompt</h4>
+                            <p class="font-sarabun text-textBody">อธิบายว่าเราต้องการเปลี่ยนเรื่องเป็นอะไร และแต่ละ Scene ของวิดีโอใหม่ควรเกิดอะไรขึ้น</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Example -->
+            <section class="scroll-mt-28">
+                <div class="inline-flex items-center gap-2 bg-textMain text-white px-3 py-1.5 rounded-full mb-4">
+                    <i class="ph-fill ph-star"></i>
+                    <span class="font-kanit font-medium text-sm">PROMPT EXAMPLE</span>
+                </div>
+                <h3 class="font-kanit font-semibold text-3xl text-textMain mb-6">ตัวอย่างการใช้งานจริง</h3>
+                
+                <div class="bg-warmWhite border border-lightGray rounded-[20px] p-6 shadow-soft space-y-6">
+                    <p class="font-sarabun text-textBody text-lg leading-relaxed">
+                        Prompt ตามภาพบนซึ่งได้มาจากการถอดวิเคราะห์วีดีโอต้นฉบับใน ChatGPT
+                        <br><br>
+                        <strong>อีกเทคนิค:</strong> เอา Prompt ด้านล่างนี้ของมดไปถาม Chat GPT ต่อว่า <em>"ช่วยเปลี่ยนเนื้อหาเป็น .... ใส่เรื่องที่เราต้องการ"</em>
+                    </p>
+
+                    <div class="relative bg-[#1E1E1E] rounded-[16px] overflow-hidden border border-gray-800 shadow-lg">
+                        <div class="flex items-center justify-between px-4 py-3 bg-[#2D2D2D] border-b border-gray-700">
+                            <span class="font-kanit font-medium text-sm text-gray-300 flex items-center gap-2"><i class="ph-fill ph-code"></i> Premium 3D Dental Commercial Prompt</span>
+                            <button class="text-gray-400 hover:text-white transition-colors bg-white/10 px-3 py-1 rounded-md text-sm flex items-center gap-1" onclick="navigator.clipboard.writeText(document.getElementById('prompt2').innerText); alert('Copied!');">
+                                <i class="ph ph-copy"></i> Copy
+                            </button>
+                        </div>
+                        <pre id="prompt2" class="p-5 font-mono text-sm text-gray-300 overflow-x-auto h-96 overflow-y-auto custom-scrollbar leading-relaxed">Use the uploaded REFERENCE VIDEO as the primary motion-design reference.
+
+Create a completely NEW and ORIGINAL premium 3D educational motion-design video explaining the basic concept of clear aligner treatment.
+
+IMPORTANT CREATIVE DIRECTION:
+This must feel like a PREMIUM 3D DENTAL COMMERCIAL.
+It must NOT look like:
+an infographic,
+a presentation,
+a workflow diagram,
+a medical PowerPoint,
+a step-by-step instruction card.
+
+The treatment process should be communicated mainly through CINEMATIC 3D TRANSFORMATION.
+
+CORE STORY
+Misaligned teeth → 3D scanning → digital movement planning → transparent aligner → multiple aligners progressing visually → gradual positional change → final clear-aligner hero shot
+The viewer should understand the concept by WATCHING the teeth and aligners move.
+Do not explain every stage with text.
+
+FORMAT
+9:16 vertical
+10 seconds
+Premium medical 3D commercial.
+Realistic dental visualization.
+Warm minimal studio environment.
+Transparent clear-aligner materials.
+Smooth cinematic camera movement.
+Very little typography.
+
+CRITICAL TYPOGRAPHY RULE
+Use ONLY these three Thai text elements in the ENTIRE video:
+“จัดฟันใส”
+“สแกน 3D”
+“ติดตามผล”
+
+NO OTHER TEXT.
+Specifically DO NOT DISPLAY:
+“ชุดที่ 1”, “ชุดที่ 2”, “ชุดที่ 3”, “ชุดที่ 4”, “ค่อยๆ เคลื่อน”, “วางแผน”, “ขั้นตอน”, “การเคลื่อน”
+Do not display aligner numbers.
+Do not display arrows with labels.
+Do not display a process diagram.
+Do not display multiple text labels around the teeth.
+Do not create a workflow infographic.
+If Thai typography cannot be rendered accurately, remove the text entirely and preserve clean negative space.
+
+0.0–1.5 SEC: HERO INTRO
+Start immediately with a beautiful realistic 3D dental arch floating in a warm cream studio environment.
+Several teeth have mild natural misalignment.
+Use natural ivory enamel.
+Soft realistic gums.
+Premium studio reflections.
+Camera performs a slow cinematic orbit.
+Display only: “จัดฟันใส” (Large, elegant Thai typography.)
+No additional text.
+
+1.5–3.0 SEC: 3D SCANNING
+Camera smoothly pushes toward the teeth.
+A thin teal scanning light travels across the entire dental arch.
+As the scanning light passes, the realistic teeth temporarily transform into a sophisticated digital mesh.
+Show: subtle contour lines, tiny positioning points, soft scanning grid, transparent target outlines.
+Display only: “สแกน 3D” (Keep the text small and secondary. The teeth remain the hero.)
+
+3.0–4.5 SEC: VISUALIZE THE PLAN
+NO TEXT.
+Stay close to the digital dental model.
+Show several selected teeth highlighted with subtle teal outlines.
+Transparent ghost versions of the teeth appear slightly offset from their current positions.
+Use elegant curved trajectory lines to visually indicate intended positional changes.
+One tooth subtly rotates. Another shifts slightly sideways. Another moves slightly backward.
+Do not complete the movement.
+This scene represents treatment planning entirely through motion.
+No labels. No arrows containing text. No diagram.
+Camera slowly travels around the dental arch.
+
+4.5–6.0 SEC: ALIGNER HERO MOMENT
+Transition smoothly back to realistic teeth.
+A single transparent clear aligner floats above the dental arch.
+Camera moves upward slightly to reveal its shape.
+The aligner should look highly realistic: transparent medical plastic, thin polished edges, subtle reflections, realistic refraction, precise dental geometry.
+Rotate the aligner slightly in the light.
+Then smoothly lower it onto the teeth.
+The transparent aligner seats precisely over the dental arch.
+Add one satisfying soft transparent click.
+NO TEXT.
+Make this one of the most visually beautiful moments of the video.
+
+6.0–8.3 SEC: ALIGNER PROGRESSION
+THIS SECTION MUST BE VISUAL ONLY.
+NO TEXT. NO NUMBERS. NO LABELS. NO “ชุดที่ 1, 2, 3, 4”.
+Show the concept of multiple aligners through cinematic object replacement.
+Begin with the first transparent aligner seated over the teeth.
+It gently lifts upward.
+As it lifts, selected teeth make an extremely subtle positional adjustment.
+A slightly different transparent aligner smoothly enters from above.
+It seats over the teeth.
+CUT WITH MOTION.
+That aligner lifts.
+The teeth make another tiny planned adjustment.
+Another aligner replaces it.
+Repeat this visually several times.
+Use the rhythm: ALIGNER → LIFT → SUBTLE TOOTH MOVEMENT → NEXT ALIGNER → SEAT
+Repeat smoothly.
+The viewer should intuitively understand: Different aligners guide the teeth through a progression.
+Do not explain this using typography.
+Use subtle ghosted previous tooth positions for approximately 0.2–0.3 seconds during each movement.
+Keep tooth movement realistic and restrained.
+NO instant perfect alignment. NO dramatic snapping. NO exaggerated transformation.
+Camera gradually moves around the dental arch throughout the sequence so the progression feels cinematic rather than instructional.
+
+8.3–9.2 SEC: PROGRESS VISUALIZATION
+NO DIAGRAM. NO WORKFLOW. NO MULTIPLE MINIATURE DENTAL MODELS.
+Return to ONE dental arch only.
+Camera pulls back slightly.
+Briefly show a transparent ghost image of the earlier tooth positions behind the current positions.
+The ghost fades away.
+This visually communicates progression over time.
+Display only: “ติดตามผล” (Small elegant Thai typography. No other text.)
+
+9.2–10.0 SEC: FINAL HERO
+The transparent aligner smoothly seats over the dental arch one final time.
+Camera performs a premium macro push-in.
+A soft teal highlight travels across the edge of the transparent aligner.
+The aligner catches the studio light beautifully.
+Large Thai headline: “จัดฟันใส”
+Nothing else.
+Hold on a clean premium dental hero shot.
+
+VISUAL DESIGN
+Background: warm cream #F6F2EA
+Accent: soft medical teal #58B8AE
+Typography: near black #151515
+Teeth: natural ivory enamel. Do not create unnaturally white teeth.
+Aligner: almost invisible transparent medical plastic with realistic reflections and refraction.
+Lighting: premium cosmetic product photography. Large soft key light. Subtle rim light. Soft realistic shadows.
+
+CAMERA
+Treat the dental arch like a premium PRODUCT.
+Use: slow orbit, macro push-in, controlled perspective shift, smooth tracking movement, subtle pull-back.
+Keep the camera continuously moving. Avoid static infographic compositions.
+
+TRANSITIONS
+Transitions must happen through OBJECT MOTION.
+Examples: scanning light transforms physical teeth into digital mesh, digital mesh dissolves back into realistic teeth, transparent aligner enters from depth, aligner movement motivates the next shot, camera orbit hides cuts, transparent material creates match transitions.
+Do NOT transition by replacing one infographic card with another.
+
+SOUND
+Premium minimal medical-tech soundtrack.
+Use: soft scanning sweep, subtle transparent plastic clicks, gentle cinematic whooshes, very soft digital confirmation sounds.
+During the aligner progression: click → movement → click → movement → click
+Do not make the sound repetitive or mechanical.
+
+ABSOLUTE NEGATIVE INSTRUCTIONS
+DO NOT create a treatment timeline. DO NOT create a flowchart. DO NOT create a circular process diagram. DO NOT create multiple miniature dental images with arrows. DO NOT create numbered aligner stages. DO NOT display “ชุดที่ 1”. DO NOT display “ชุดที่ 2”. DO NOT display “ชุดที่ 3”. DO NOT display “ชุดที่ 4”. DO NOT display “ค่อยๆ เคลื่อน”. DO NOT place explanatory text beside every object. DO NOT turn the final scene into an infographic. DO NOT show instant perfect alignment. DO NOT show guaranteed results. DO NOT show blood, pain, surgery, extraction or graphic anatomy.
+
+FINAL VISUAL PRINCIPLE
+SHOW THE PROCESS. DO NOT WRITE THE PROCESS.
+The viewer should understand: SCAN → PLAN → ALIGNER → CHANGE ALIGNER → TEETH GRADUALLY CHANGE POSITION → PROGRESS MONITORING through 3D motion alone.
+Typography is only a supporting element. The dental objects, transparent aligners, camera movement and transformation must tell the story.</pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section: Conclusion & Summary -->
+            <section class="scroll-mt-28">
+                <div class="bg-cream/50 border border-lightGray rounded-[20px] p-6 md:p-8 shadow-sm">
+                    <h3 class="font-kanit font-semibold text-2xl text-textMain mb-6">แล้วเมื่อไหร่ควรหา Reference ใหม่?</h3>
+                    <div class="space-y-4 mb-8">
+                        <div class="bg-white p-5 rounded-xl border border-lightGray flex gap-4 items-start shadow-sm">
+                            <div class="bg-primary/10 text-primary p-2 rounded-lg shrink-0 mt-1">
+                                <i class="ph-bold ph-swap"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-kanit font-bold text-lg text-textMain mb-1">ถ้าเราแค่ต้องการ "เปลี่ยนเนื้อหา"</h4>
+                                <p class="font-sarabun text-textBody">ยังใช้ Reference เดิมและแชทเดิมต่อได้เลย</p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white p-5 rounded-xl border border-lightGray flex gap-4 items-start shadow-sm">
+                            <div class="bg-textMain/10 text-textMain p-2 rounded-lg shrink-0 mt-1">
+                                <i class="ph-bold ph-film-slate"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-kanit font-bold text-lg text-textMain mb-1">แต่ถ้ารู้สึกว่าอยากได้ Motion คนละแบบ</h4>
+                                <p class="font-sarabun text-textBody">เช่น อยากเปลี่ยนจากงาน SaaS ที่เรียบและเร็ว ไปเป็น 3D Product Commercial ที่มี Camera Orbit และ Lighting หนักขึ้น <strong>กรณีนี้ค่อยกลับไปหา Reference ใหม่</strong> แล้วเริ่ม Workflow เดิมอีกครั้ง (หา Reference &rarr; แนบ Video &rarr; วิเคราะห์ &rarr; ได้ Prompt &rarr; เปลี่ยนเรื่อง &rarr; แนบ Reference + Prompt ใหม่ใน Flow &rarr; Generate)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3 class="font-kanit font-semibold text-2xl text-textMain mb-4">สิ่งที่ควรเก็บจริงๆ คือคลัง Reference</h3>
+                    <p class="font-sarabun text-textBody text-lg leading-relaxed mb-6">
+                        พอใช้วิธีนี้ไปเรื่อยๆ สิ่งที่มีค่ามากขึ้นเรื่อยๆ จะไม่ใช่แค่ Prompt แต่คือ <strong>Motion Reference Library ของเรา</strong>
+                        อาจแบ่งเก็บเป็นหมวดอย่าง: SaaS, Product, 3D, UI, Typography, Brand, Finance, Data, Educational
+                    </p>
+
+                    <h4 class="font-kanit font-bold text-xl text-textMain mb-4 text-center mt-10">สรุป Workflow ทั้งหมดจำง่ายๆ</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                        <div class="bg-white p-6 rounded-xl border-t-4 border-t-primary border border-lightGray text-center shadow-sm">
+                            <i class="ph-fill ph-heart text-3xl text-primary mb-3"></i>
+                            <p class="font-kanit font-bold text-textMain mb-2">ชอบ Motion เดิม</p>
+                            <p class="font-sarabun text-sm text-textBody">พิมพ์ “เปลี่ยนเรื่องเป็น…” ในแชทเดิม</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl border-t-4 border-t-textMain border border-lightGray text-center shadow-sm">
+                            <i class="ph-fill ph-rocket-launch text-3xl text-textMain mb-3"></i>
+                            <p class="font-kanit font-bold text-textMain mb-2">เอาไปสร้างจริง</p>
+                            <p class="font-sarabun text-sm text-textBody">แนบ Ref Video + Prompt เรื่องใหม่เข้า Flow</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-xl border-t-4 border-t-gray-400 border border-lightGray text-center shadow-sm">
+                            <i class="ph-fill ph-arrows-clockwise text-3xl text-gray-500 mb-3"></i>
+                            <p class="font-kanit font-bold text-textMain mb-2">อยากได้ Motion ใหม่</p>
+                            <p class="font-sarabun text-sm text-textBody">หา Reference ใหม่ แล้ววิเคราะห์ใหม่</p>
+                        </div>
+                    </div>
+
+                    <div class="relative pl-6 py-4 border-l-4 border-primary bg-primary/5 rounded-r-[12px]">
+                        <p class="font-kanit font-medium text-lg text-primary text-center">
+                            "เท่านี้ Reference ที่เราเซฟไว้ก็ไม่ได้เป็นแค่ Inspiration อีกต่อไป<br>แต่กลายเป็นคลัง Motion Direction ที่หยิบมาใช้สร้างงานใหม่ได้เรื่อยๆ"
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Block (Special Offer) -->
+            <section id="special-offer" class="bg-primary text-white rounded-[24px] p-8 md:p-12 shadow-[0_12px_40px_rgba(244,122,32,0.3)] text-center relative overflow-hidden mt-12 scroll-mt-28">
+                <!-- Abstract BG shapes -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -z-0"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-black/5 rounded-full blur-2xl -z-0"></div>
+                
+                <div class="relative z-10 max-w-4xl mx-auto">
+                    
+                    <!-- Title and Text -->
+                    <h2 class="font-kanit font-bold text-3xl md:text-5xl mb-6 leading-tight">อยากสร้างคอนเทนต์ด้วย AI อย่างมืออาชีพไหม?</h2>
+                    
+                    <p class="font-sarabun text-lg text-white/95 mb-8 max-w-3xl mx-auto leading-relaxed">
+                        อยากสร้าง Infographic สวย ๆ ทำ Motion Video หรือตัดต่อวิดีโอด้วย AI แต่ยังไม่รู้จะเริ่มจากตรงไหน? เรารวม <strong>2 คู่มือฉบับลงมือทำจริง</strong> ที่พาตั้งแต่การวางแผน ออกแบบ สร้างโมชั่น ไปจนถึงตัดต่อและ Render วิดีโอ พร้อม Workflow, Prompt และแหล่งเครื่องมือที่นำไปใช้ต่อได้ทันที
+                    </p>
+
+                    <!-- INSERTING THE IMAGE HERE -->
+                    <div class="mb-10 rounded-2xl overflow-hidden shadow-2xl border-4 border-white/30 max-w-3xl mx-auto transform hover:scale-[1.02] transition-transform duration-300">
+                        <img src="https://i.postimg.cc/tgdJ8LGR/IMG-8178.png" alt="2 คอร์สสาย Visual + Motion AI ราคา 199 บาท" class="w-full h-auto object-cover block">
+                    </div>
+
+                    <!-- Price Box -->
+                    <div class="bg-white text-textMain rounded-2xl p-6 mb-10 max-w-2xl mx-auto shadow-xl">
+                        <p class="font-kanit text-lg font-medium mb-1 text-gray-600">เนื้อหาดีมากแต่ยังไม่ถูกสร้างเป็นเล่ม เลยทำราคาไว้ดีเช่นกันค่ะ</p>
+                        <p class="font-kanit text-2xl font-bold mb-2">ทั้งหมดนี้เพียง <span class="text-4xl text-primary font-black">199 บาท</span></p>
+                        <p class="font-sarabun text-sm text-gray-500">จ่ายครั้งเดียว ได้ทั้ง 2 คู่มือ! (เป็น EBOOK ออนไลน์ใน Notion)</p>
+                    </div>
+
+                    <!-- Private Coaching Info -->
+                    <div class="flex flex-col items-center justify-center gap-2 mb-10 bg-black/10 p-6 rounded-2xl border border-white/20">
+                         <div class="flex items-center gap-2 mb-2">
+                             <i class="ph-fill ph-crown text-yellow-300 text-2xl"></i>
+                             <p class="font-kanit font-bold text-xl">สนใจ Private Workshop 1:1?</p>
+                         </div>
+                         <p class="font-sarabun text-base text-white/90 max-w-xl">
+                             ให้เราช่วยสอนและลงมือทำไปด้วยกัน ระยะเวลา 3 ชั่วโมง ราคา <strong>2,990 บาท</strong> ปรับเนื้อหาให้เข้ากับงานของคุณ พร้อมดูแลและให้คำปรึกษาต่ออีก 30 วันค่ะ
+                         </p>
+                    </div>
+                    
+                    <!-- Call To Action Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-2xl mx-auto">
+                        <a href="https://buy.stripe.com/6oUbIU1XDbz26SRgU87bW0g" target="_blank" 
+                           class="flex-1 w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white text-primary font-kanit font-bold text-xl px-8 py-5 rounded-full shadow-xl hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-primary/20">
+                            <i class="ph-bold ph-credit-card"></i> สั่งซื้อผ่านระบบ
+                        </a>
+                        <a href="https://lin.ee/pqorKpL" target="_blank" 
+                           class="flex-1 w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-[#00B900] text-white font-kanit font-bold text-xl px-8 py-5 rounded-full shadow-xl hover:-translate-y-1 hover:shadow-2xl transition-all duration-300 border-2 border-transparent hover:border-white/50">
+                            <i class="ph-bold ph-chat-circle-dots"></i> ทักไลน์สอบถาม
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+        </article>
+    </main>
+
+    <!-- Floating LINE Button -->
+    <a href="https://lin.ee/pqorKpL" target="_blank" class="fixed bottom-6 right-6 bg-[#00B900] text-white p-4 rounded-full shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 z-50 flex items-center justify-center group border-2 border-white/20">
+        <i class="ph-bold ph-chat-circle-dots text-3xl"></i>
+        <span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap font-kanit font-medium group-hover:ml-3 group-hover:mr-2">สอบถามทาง LINE</span>
+    </a>
+
+</body>
+</html>
